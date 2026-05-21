@@ -1,0 +1,117 @@
+<?xml version="1.0" ?>
+<robot name="complete_system_urdf" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find complete_system_urdf_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find complete_system_urdf_description)/urdf/complete_system_urdf.ros2control.xml" />
+<xacro:include filename="$(find complete_system_urdf_description)/urdf/complete_system_urdf.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="-0.0004893152259659719 -0.2513490561575862 -0.11283715805734928" rpy="0 0 0"/>
+    <mass value="1.6888096724896144"/>
+    <inertia ixx="0.011059" iyy="0.008847" izz="0.009341" ixy="-5e-06" iyz="0.001084" ixz="-9e-06"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find complete_system_urdf_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find complete_system_urdf_description)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="SP_1">
+  <inertial>
+    <origin xyz="-0.000157 0.127198 -0.096757" rpy="0 0 0"/>
+    <mass value="0.7470"/>
+    <inertia ixx="0.009477" ixy="+0.000007" ixz="+0.000004"
+              iyy="0.008693" iyz="+0.003381" izz="0.004240"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0003 0.235996 -0.006391" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find complete_system_urdf_description)/meshes/SP_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.0003 0.235996 -0.006391" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find complete_system_urdf_description)/meshes/SP_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="FE_1">
+  <inertial>
+    <origin xyz="+0.015907 -0.014594 +0.066041" rpy="0 0 0"/>
+    <mass value="0.5000"/>
+    <inertia ixx="0.002095" ixy="-0.000326" ixz="-0.000239"
+          iyy="0.003856" iyz="-0.000299" izz="0.002659"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.000339 0.001 0.190609" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find complete_system_urdf_description)/meshes/FE_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0.000339 0.001 0.190609" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find complete_system_urdf_description)/meshes/FE_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="RU_1">
+  <inertial>
+    <origin xyz="-0.085404 +0.069009 -0.080129" rpy="0 0 0"/>
+    <mass value="0.5350"/>
+    <inertia ixx="0.001653" ixy="+0.000097" ixz="-0.000087" iyy="0.001705" iyz="+0.000042" izz="0.001788"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.085661 0.001 -0.006391" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find complete_system_urdf_description)/meshes/RU_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="-0.085661 0.001 -0.006391" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find complete_system_urdf_description)/meshes/RU_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+
+<joint name="joint_1" type="revolute">
+  <origin xyz="0.0003 -0.235996 0.006391" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="SP_1"/>
+  <axis xyz="0.0 -1.0 0.0"/>
+  <limit upper="1.22173" lower="-1.22173" effort="100" velocity="100"/>
+</joint>
+
+<joint name="joint_2" type="revolute">
+  <origin xyz="-0.000639 0.234996 -0.197" rpy="0 0 0"/>
+  <parent link="SP_1"/>
+  <child link="FE_1"/>
+  <axis xyz="0.0 0.0 -1.0"/>
+  <limit upper="1.047198" lower="-1.047198" effort="100" velocity="100"/>
+</joint>
+
+<joint name="joint_3" type="revolute">
+  <origin xyz="0.086 0.0 0.197" rpy="0 0 0"/>
+  <parent link="FE_1"/>
+  <child link="RU_1"/>
+  <axis xyz="1.0 0.0 0.0"/>
+  <limit upper="0.523599" lower="-0.523599" effort="100" velocity="100"/>
+</joint>
+</robot>
